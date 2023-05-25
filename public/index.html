@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <head>
+      <title>
+        This container allows you to use amazone cognito (amplify) authorization
+        in postman
+      </title>
+      <meta charset="UTF-8" />
+      <meta
+        name="description"
+        content="This container allows you to use amazone cognito (amplify) authorization
+      in postman"
+      />
+      <meta name="author" content="Siarhei Dudko" />
+      <meta charset="UTF-8" />
+      <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="//unpkg.com/swagger-ui-dist@3/swagger-ui.css"
+      />
+      <style>
+        body {
+          padding: 5em;
+        }
+        .topbar,
+        .swagger-ui section.models {
+          display: none;
+        }
+        h1 {
+          text-align: center;
+        }
+        li {
+          font-weight: bold;
+        }
+        th,
+        td {
+          border: 1px solid black;
+          padding: 1em;
+        }
+      </style>
+      <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+      <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-standalone-preset.js"></script>
+      <link
+        rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css"
+      />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    </head>
+  </head>
+  <body>
+    <h1
+      id="this-container-allows-you-to-use-amazone-cognito-amplify-authorization-in-postman"
+    >
+      This container allows you to use amazone cognito (amplify) authorization
+      in postman
+    </h1>
+
+    <div id="swagger-ui"></div>
+    <br />
+    <hr />
+    <br />
+    <h2 id="setup">Setup</h2>
+    <p>Add configuration settings:</p>
+    <ul>
+      <li>COGNITO_AUTH_USER</li>
+      <li>COGNITO_AUTH_PASSWORD</li>
+      <li>COGNITO_AUTH_CONFIG</li>
+    </ul>
+    <p>Example:</p>
+    <table>
+      <thead>
+        <tr>
+          <th><code>COGNITO_AUTH_USER</code></th>
+          <th><code>COGNITO_AUTH_PASSWORD</code></th>
+          <th><code>COGNITO_AUTH_CONFIG</code></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>test_user@email.com</code></td>
+          <td><code>test_user_password</code></td>
+          <td>
+            <code
+              >{&quot;scope&quot;:[&quot;email&quot;,&quot;openid&quot;],&quot;identityPoolId&quot;:&quot;us-central-1:test_pool_id&quot;,&quot;region&quot;:&quot;us-central-1&quot;,&quot;userPoolId&quot;:&quot;us-central-1_TESTPOOLID&quot;,&quot;userPoolWebClientId&quot;:&quot;test-pool-web-client-id&quot;,&quot;authenticationFlowType&quot;:&quot;USER_SRP_AUTH&quot;}</code
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Add this code to Scripts/Before query:</p>
+    <pre><code class="lang-js"><span class="hljs-keyword">const</span> authConfig = JSON.<span class="hljs-keyword">parse</span>(pm.environment.<span class="hljs-built_in">get</span>(<span class="hljs-string">"COGNITO_AUTH_CONFIG"</span>));
+<span class="hljs-keyword">const</span> username = pm.environment.<span class="hljs-built_in">get</span>(<span class="hljs-string">"COGNITO_AUTH_USER"</span>);
+<span class="hljs-keyword">const</span> password = pm.environment.<span class="hljs-built_in">get</span>(<span class="hljs-string">"COGNITO_AUTH_PASSWORD"</span>);
+
+<span class="hljs-keyword">const</span> postRequest = {
+  url: <span class="hljs-string">"http://localhost:10000/auth"</span>,
+  method: <span class="hljs-string">"POST"</span>,
+  header: {
+    <span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json"</span>,
+  },
+  body: {
+    mode: <span class="hljs-string">"raw"</span>,
+    raw: JSON.stringify({
+      username,
+      password,
+      authConfig,
+    }),
+  },
+};
+
+pm.sendRequest(postRequest, (<span class="hljs-keyword">error</span>, response) =&gt; {
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">error</span>) {
+    console.<span class="hljs-built_in">log</span>(<span class="hljs-keyword">error</span>);
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-keyword">const</span> { <span class="hljs-keyword">token</span> } = response.json().data;
+  pm.collectionVariables.<span class="hljs-keyword">set</span>(<span class="hljs-string">"AUTH_TOKEN"</span>, <span class="hljs-keyword">token</span>);
+});
+</code></pre>
+    <p>
+      Use the <code>{{AUTH_TOKEN}}</code> variable for authorization (for
+      example in header).
+    </p>
+    <script>
+      window.onload = () => {
+        const swaggerInstance = SwaggerUIBundle({
+          dom_id: "#swagger-ui",
+          deepLinking: true,
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+          layout: "StandaloneLayout",
+          validatorUrl: "https://validator.swagger.io/validator",
+          url: "openapi.yaml",
+          persistAuthorization: true,
+        });
+        window.ui = swaggerInstance;
+      };
+    </script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+  </body>
+</html>

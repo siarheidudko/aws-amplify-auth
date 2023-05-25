@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: aws-amplify-auth
+  description:
+    This container allows you to use amazone cognito (amplify) authorization
+    in postman
+  contact:
+    email: sergey@dudko.dev
+  version: 1.0.0
+servers:
+  - url: http://localhost:10000
+tags:
+  - name: auth
+    description: Get access token
+paths:
+  /auth:
+    post:
+      tags:
+        - auth
+      summary: Get access token
+      description: Get access token from AWS cognito
+      operationId: getAccessToken
+      requestBody:
+        description: Get access token from AWS cognito
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CognitoAuthRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CognitoAuthResponse"
+components:
+  schemas:
+    CognitoAuthRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: user name in cognito
+          example: test@user.com
+        password:
+          type: string
+          format: user password in cognito
+          example: bvdyasvdyasfdyavs
+        authConfig:
+          type: object
+          description: cognito auth config
+          example:
+            scope:
+              - email
+              - openid
+            identityPoolId: us-central-1:test_pool_id
+            region: us-central-1
+            userPoolId: us-central-1_TESTPOOLID
+            userPoolWebClientId: test-pool-web-client-id
+            authenticationFlowType: USER_SRP_AUTH
+
+    CognitoAuthResponse:
+      type: object
+      required: ["data"]
+      properties:
+        data:
+          type: object
+          required: ["token"]
+          properties:
+            token:
+              type: string
+              description: access token (jwt) string
+              example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
