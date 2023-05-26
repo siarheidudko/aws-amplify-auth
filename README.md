@@ -1,5 +1,9 @@
 # This container allows you to use amazone cognito (amplify) authorization in postman
 
+The container does not save your data, after successfully receiving the token and returning the result, it no longer knows anything about your account. This is done from a security point of view.
+
+**All settings are made in the Postman application, the container does not require configuration.**
+
 ## Setup
 
 Add configuration settings:
