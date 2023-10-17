@@ -37,6 +37,7 @@ const postRequest = {
       username,
       password,
       authConfig,
+      tokenType: 'id',
     }),
   },
 };
@@ -52,3 +53,13 @@ pm.sendRequest(postRequest, (error, response) => {
 ```
 
 Use the `{{AUTH_TOKEN}}` variable for authorization (for example in header).
+
+You can use various tokenType options.
+| `tokenType` | Return params |
+| --- | --- |
+| `access` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) |
+| `id` | - `token` (JWT, Cognito ID Token) <br>- `idToken` (JWT, Cognito ID Token) |
+| `refresh` | - `token` (JWT, Cognito Refresh Token) <br>- `refreshToken` (JWT, Cognito Refresh Token) |
+| `all` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) <br>- `idToken` (JWT, Cognito ID Token) <br>- `refreshToken` (JWT, Cognito Refresh Token) |
+
+For more information, see Swagger UI [http://localhost:10000](http://localhost:10000)

@@ -1,6 +1,6 @@
 {
   "name": "aws-amplify-auth",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Authenticator for Postman (aws amplify/cognito)",
   "main": "./lib/index.js",
   "scripts": {
