@@ -1,12 +1,13 @@
 {
   "name": "aws-amplify-auth",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Authenticator for Postman (aws amplify/cognito)",
   "main": "./lib/index.js",
   "scripts": {
     "test": "node ./lib/index.js",
     "build": "docker-compose build",
-    "start": "docker-compose up"
+    "start": "docker-compose up",
+    "update": "eval \"$(node -e 'const t = require(`./package.json`);const ignore = require(`./ignoreUpdatesModules.json`);console.log(`npm i ${(Object.keys(t.dependencies||{}).filter((e)=>ignore.base.indexOf(e) === -1).map((e)=>(`${e}@latest`)).join(` `))} --save&&npm i ${(Object.keys(t.devDependencies||{}).filter((e)=>ignore.dev.indexOf(e) === -1).map((e)=>(`${e}@latest`)).join(` `))} --save-dev`);')\""
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
   },
   "homepage": "https://github.com/siarheidudko/aws-amplify-auth#readme",
   "dependencies": {
-    "@aws-amplify/auth": "^5.3.6",
+    "@aws-amplify/auth": "^5.6.5",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
