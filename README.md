@@ -16,7 +16,7 @@ Example:
 
 | `COGNITO_AUTH_USER` | `COGNITO_AUTH_PASSWORD` | `COGNITO_AUTH_CONFIG` |
 | --- | --- | --- |
-| `test_user@email.com` | `test_user_password` | `{"scope":["email","openid"],"identityPoolId":"us-central-1:test_pool_id","region":"us-central-1","userPoolId":"us-central-1_TESTPOOLID","userPoolWebClientId":"test-pool-web-client-id","authenticationFlowType":"USER_SRP_AUTH"}` |
+| `test_user@email.com` | `test_user_password` | `{"scope":["email","openid"],"identityPoolId":"us-central-1:test_pool_id","userPoolId":"us-central-1_TESTPOOLID","userPoolWebClientId":"test-pool-web-client-id","authenticationFlowType":"USER_SRP_AUTH"}` |
 
 Add this code to Scripts/Before query:
 
@@ -59,7 +59,6 @@ You can use various tokenType options.
 | --- | --- |
 | `access` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) |
 | `id` | - `token` (JWT, Cognito ID Token) <br>- `idToken` (JWT, Cognito ID Token) |
-| `refresh` | - `token` (JWT, Cognito Refresh Token) <br>- `refreshToken` (JWT, Cognito Refresh Token) |
-| `all` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) <br>- `idToken` (JWT, Cognito ID Token) <br>- `refreshToken` (JWT, Cognito Refresh Token) |
+| `all` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) <br>- `idToken` (JWT, Cognito ID Token) |
 
 For more information, see Swagger UI [http://localhost:10000](http://localhost:10000)

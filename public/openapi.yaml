@@ -59,7 +59,6 @@ components:
               - email
               - openid
             identityPoolId: us-central-1:test_pool_id
-            region: us-central-1
             userPoolId: us-central-1_TESTPOOLID
             userPoolWebClientId: test-pool-web-client-id
             authenticationFlowType: USER_SRP_AUTH
@@ -71,7 +70,6 @@ components:
           enum:
             - access
             - id
-            - refresh
             - all
     CognitoAuthResponse:
       type: object
@@ -94,7 +92,3 @@ components:
               type: string
               description: id token (jwt) string
               example: eyJraWQiOiJsaTFwVHVhWlFucUxERytMV3JTNWJyQkJJbFNXWXl6aldiOHNseDBPa3QwPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3MTRkNDUwNy01MDVlLTQxYjYtOTE4MS03ODlmNDBlMjEyNDkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSEJiMlprNVlMIiwiY29nbml0bzp1c2VybmFtZSI6IjcxNGQ0NTA3LTUwNWUtNDFiNi05MTgxLTc4OWY0MGUyMTI0OSIsImdpdmVuX25hbWUiOiJTaWFyaGVpMyIsIm9yaWdpbl9qdGkiOiI4NTEwNmNjMS0zOWUzLTQxMzEtOTU3MS1mMmM4MDY0NGMwOTUiLCJhdWQiOiIyNWc3M21wY2IxZXE1YjhqZ2R2ZXI1MTFwbyIsImV2ZW50X2lkIjoiNjY2ODU3ZDMtZTc5Ny00YmRlLTgzN2EtNzEzNDgzYjEyNDZiIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2OTc1MzYxNTEsImV4cCI6MTY5NzUzOTY5MSwiaWF0IjoxNjk3NTM2MTUxLCJmYW1pbHlfbmFtZSI6IkR1ZGtvIiwianRpIjoiNzNiYmFjZTYtNmJmOC00N2M4LWI4ZGItNDllNWNkNTJiYmMzIiwiZW1haWwiOiJzZHVka29AcmVtZWR5cG9pbnRzb2x1dGlvbnMuY29tIn0.IbZ2rhJ6VLjBJ6aWIqXTqclHe4jhgctDbNn-r-chukTgBI5dg33qrQ1ve5MsmSGJqdxRLX_XoP1IKZX-W6LQ_WAjRp1NHJzxeUr-JGATao5DN3ZWE_O02dAxX_orDds6BxH0MfiIQaAXgdlS9-TEPw9B979CouYUhdJwy26QOBEMaqHFIE1na4GfbIveCLninAoZbzooNm3EHK0JiLQHkM6YRVW3AM2hJbFA_PXA_3CBRz5bO2Z6lLQeIwQeg1gpsOyB_lNWapjXq4pkY92ITGWyPL2V3KgB1DKuVAeM00i6ntNHMJHk2J1ZQClVW5itYGAHnvcFgWhDpjFt67cbCw
-            refreshToken:
-              type: string
-              description: refresh token (jwt) string
-              example: eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.dErR1VeoqhGUm7atZolCO24eC2dgSWP7coOuG9rIINGoiJopDRt5JzTZLJKx8bZpgREVBWmMLuykHdyphx487UwXv3on6os4HLn9XPkVD-uYEtdq1oSamv8FAMKiGFBJylo7a8yoK9XkClKfiiS6luzERtoOBthL5cJUdjhBbH7xrQm_lXMQv8i1RzbKkjjcUZifdmiOb8FiNR1To_wMdNh6PfMB4DN55JbXWxUfnCVujTN3-XwW2J42Sd96kfXBmRuzgFl0Ifaunzs2ZWnkR8uiB2TKf8yK5QdpTYcbu5MKmFT4o_D3C2KAobmWKeuJfIT40DFJUKpmX23DjH-XoA.zhlUNhzzVSObmyhQ.Wj60MidgnOcpmCJrdiuSODrNGSDhJ5MEg9-JLWjBOyfscaRP0vxXhu4G1FnhD4s4dKBGV54k3q-JkAOCvYLE7mMOZwQxkiKqDXSQTCDLGOvfA4c74zcpqtfrBzz5NJE3aa8ZOJcFVjN67DWtVAjFrLXZCRn7Ps7_FIsg77lzpMT_xToFc9xticGGz4_ndyrtWlfAlsohj6NZBzNoBYBJn0FTA66dZ9ygaB8SEm0FIOlxmzGuwdbqFxR8PoYh-KX141UcAOAOQD83s-Emzbobo4981SPr-AJnjLlyJOEstM-DYVrJzAKqsIlMsyDgjbf-bAlSlE725Sr1JiZq1Ct9MHB-OllPwRTzYjTzQH93Jr2S6YwEgDDpmiBLc6m-fQAoRO9ABw8GzJ5lVaSKuAhpnp942orPE0rrFqlSew61_qMfxhb5f9dd2qSpdt1WSx8uvjx_WeDD84ZlViVz7LCuLljTrSESMAtd1aKXuU7n42jOscsFPFB22o1A0c5aTouWp8I5f_HGnaVSzqbvbRAz3QcI9JEJt3qmxyDYjJ7VS0B5kMegDdzaa-4qkh8a2AQ7uc0kXd4HhMyjAJh7KvBQCs-r-7jtcaal0KduUNuwSh0bRJdc1FVO6VwL2Z25dTyG6czkuGdmPzF0azvN3Fg6x8Ssm6_fiZE6zibCYpOnvnP95ffFeE69AiaPgfHgNiwNI3IAJpw4lNkSvEgOQV5AxS3rDHYRpoFwu-x0IYiIDcNSG6pc0fx6TjwVdw5xRP_bzG3euLhUfHqO-nXZIXYJoL84QrIj7j6ovmAn0M7lgScUwL4e2_mBQkB5mE763K9TZYuMiLvtbo671njQIl6bxtOyAg4bUsSWRU0MQXFSBnOxfgWVYFEHNl25Acu_Xh9ckUSVk_Krm_uCa6PUUY-_2le5RZ9voa4GlrpL46bPsc1FcQVHdiWa7DEml2Dg26n47OOVsx0XOcUsFwEROrLRZDrMDivTNC5s8d595V6XNZl_evBgS4-by076jaXwhhMhNm8JfVYGFWFo_WtR2CCv4Y88b2Qegj1u933-nRQhF202xzLjhJAD_r0RCIer7NLSkId1RKknXOVCTNIF0FJS9UaPhIg9CzTf7H6ezbbw8t7mikZQVbbkVp9uYxi12sUMAGFNRSd5kv-RHWAp2hjIsTn6mPGKt17-0p9NTKw1QKfWairiQCHJ42hjq4MDCHYwiDx429y9gawHaxQTuvJvxgw5S-9c0GjtGqeN0KVIKwMWkmm_-CpQ6iftwfqknYB77k_F_iOLbxwMRHSOjP01bf2hMWSTKCvUXzh6n-LcqqJhkSQNAf2t-9Q9xNuSRQ.UXwAB_j6kRGnbeDmt_Wxzg
