@@ -26,9 +26,9 @@
   },
   "homepage": "https://github.com/siarheidudko/aws-amplify-auth#readme",
   "dependencies": {
-    "aws-amplify": "^6.5.2",
-    "body-parser": "^1.20.2",
-    "express": "^4.19.2",
+    "aws-amplify": "^6.6.2",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
     "morgan": "^1.10.0",
     "pm2": "^5.4.2"
   }

@@ -1,4 +1,4 @@
-# This container allows you to use amazone cognito (amplify) authorization in postman
+# This container allows you to use amazon cognito (amplify) authorization in postman
 
 The container does not save your data, after successfully receiving the token and returning the result, it no longer knows anything about your account. This is done from a security point of view.
 
@@ -55,6 +55,7 @@ pm.sendRequest(postRequest, (error, response) => {
 Use the `{{AUTH_TOKEN}}` variable for authorization (for example in header).
 
 You can use various tokenType options.
+
 | `tokenType` | Return params |
 | --- | --- |
 | `access` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) |
