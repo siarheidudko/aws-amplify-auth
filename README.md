@@ -62,4 +62,46 @@ You can use various tokenType options.
 | `id` | - `token` (JWT, Cognito ID Token) <br>- `idToken` (JWT, Cognito ID Token) |
 | `all` | - `token` (JWT, Cognito Access Token) <br>- `accessToken` (JWT, Cognito Access Token) <br>- `idToken` (JWT, Cognito ID Token) |
 
+Do you want to use request signing on the Amplify side?
+
+You need to add the `withSessionData` parameter to the request, for example:
+
+```js
+const postRequest = {
+  url: "http://localhost:10000/auth",
+  method: "POST",
+  header: {
+    "Content-Type": "application/json",
+  },
+  body: {
+    mode: "raw",
+    raw: JSON.stringify({
+      username,
+      password,
+      authConfig,
+      tokenType: 'id',
+      withSessionData: true
+    }),
+  },
+};
+```
+
+In response, you will receive an additional `session` json:
+
+```json
+{
+ "data": {
+  "token": "eyJraWQiO...",
+  "idToken": "eyJraWQiO...",
+  "session": {
+   "accessKey": "A...",
+   "secretAccessKey": "yX...",
+   "xAmzSecurityToken": "IQoJ..."
+  }
+ }
+}
+```
+
+Use `data.session.xAmzSecurityToken` in the `X-Amz-Security-Token` header, `data.session.accessKey` and `data.session.secretAccessKey` to sign the request.
+
 For more information, see Swagger UI [http://localhost:10000](http://localhost:10000)

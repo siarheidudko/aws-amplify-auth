@@ -42,6 +42,10 @@
       </style>
       <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
       <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-standalone-preset.js"></script>
+      <script
+        src="//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"
+        crossorigin="anonymous"
+      ></script>
       <link
         rel="stylesheet"
         href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css"
@@ -95,7 +99,7 @@
           <td><code>test_user_password</code></td>
           <td>
             <code
-              >{&quot;scope&quot;:[&quot;email&quot;,&quot;openid&quot;],&quot;identityPoolId&quot;:&quot;us-central-1:test_pool_id&quot;,&quot;region&quot;:&quot;us-central-1&quot;,&quot;userPoolId&quot;:&quot;us-central-1_TESTPOOLID&quot;,&quot;userPoolWebClientId&quot;:&quot;test-pool-web-client-id&quot;,&quot;authenticationFlowType&quot;:&quot;USER_SRP_AUTH&quot;}</code
+              >{&quot;scope&quot;:[&quot;email&quot;,&quot;openid&quot;],&quot;identityPoolId&quot;:&quot;us-central-1:test_pool_id&quot;,&quot;userPoolId&quot;:&quot;us-central-1_TESTPOOLID&quot;,&quot;userPoolWebClientId&quot;:&quot;test-pool-web-client-id&quot;,&quot;authenticationFlowType&quot;:&quot;USER_SRP_AUTH&quot;}</code
             >
           </td>
         </tr>
@@ -118,6 +122,7 @@
       username,
       password,
       authConfig,
+      tokenType: 'id',
     }),
   },
 };
@@ -135,6 +140,84 @@ pm.sendRequest(postRequest, (<span class="hljs-keyword">error</span>, response) 
       Use the <code>{{AUTH_TOKEN}}</code> variable for authorization (for
       example in header).
     </p>
+    <p>You can use various tokenType options.</p>
+    <table>
+      <thead>
+        <tr>
+          <th><code>tokenType</code></th>
+          <th>Return params</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>access</code></td>
+          <td>
+            - <code>token</code> (JWT, Cognito Access Token) <br />-
+            <code>accessToken</code> (JWT, Cognito Access Token)
+          </td>
+        </tr>
+        <tr>
+          <td><code>id</code></td>
+          <td>
+            - <code>token</code> (JWT, Cognito ID Token) <br />-
+            <code>idToken</code> (JWT, Cognito ID Token)
+          </td>
+        </tr>
+        <tr>
+          <td><code>all</code></td>
+          <td>
+            - <code>token</code> (JWT, Cognito Access Token) <br />-
+            <code>accessToken</code> (JWT, Cognito Access Token) <br />-
+            <code>idToken</code> (JWT, Cognito ID Token)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Do you want to use request signing on the Amplify side?</p>
+    <p>
+      You need to add the <code>withSessionData</code> parameter to the request,
+      for example:
+    </p>
+    <pre><code class="lang-js">const postRequest = {
+  url: <span class="hljs-string">"http://localhost:10000/auth"</span>,
+  method: <span class="hljs-string">"<span class="hljs-keyword">POST</span>"</span>,
+  header: {
+    <span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json"</span>,
+  },
+  body: {
+    mode: <span class="hljs-string">"raw"</span>,
+    raw: JSON.stringify({
+      username,
+      password,
+      authConfig,
+      tokenType: 'id',
+      withSessionData: true
+    }),
+  },
+};
+</code></pre>
+    <p>
+      In response, you will receive an additional <code>session</code> json:
+    </p>
+    <pre><code class="lang-json">{
+ <span class="hljs-attr">"data"</span>: {
+  <span class="hljs-attr">"token"</span>: <span class="hljs-string">"eyJraWQiO..."</span>,
+  <span class="hljs-attr">"idToken"</span>: <span class="hljs-string">"eyJraWQiO..."</span>,
+  <span class="hljs-attr">"session"</span>: {
+   <span class="hljs-attr">"accessKey"</span>: <span class="hljs-string">"A..."</span>,
+   <span class="hljs-attr">"secretAccessKey"</span>: <span class="hljs-string">"yX..."</span>,
+   <span class="hljs-attr">"xAmzSecurityToken"</span>: <span class="hljs-string">"IQoJ..."</span>
+  }
+ }
+}
+</code></pre>
+    <p>
+      Use <code>data.session.xAmzSecurityToken</code> in the
+      <code>X-Amz-Security-Token</code> header,
+      <code>data.session.accessKey</code> and
+      <code>data.session.secretAccessKey</code> to sign the request.
+    </p>
+
     <script>
       window.onload = () => {
         const swaggerInstance = SwaggerUIBundle({
