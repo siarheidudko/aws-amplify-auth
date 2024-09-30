@@ -31,6 +31,15 @@ jobs:
         with:
           images: ${{ env.DOCKER_REPO }}
       - name: Build and push Docker image
+        if: ${{ endWith(env.RELEASE_VERSION, '-beta') }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_REPO }}:${{ env.RELEASE_VERSION }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image
+        if: ${{ !endWith(env.RELEASE_VERSION, '-beta') }}
         uses: docker/build-push-action@v6
         with:
           context: .
