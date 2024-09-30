@@ -206,13 +206,13 @@ pm.sendRequest(postRequest, (<span class="hljs-keyword">error</span>, response) 
   <span class="hljs-attr">"session"</span>: {
    <span class="hljs-attr">"accessKey"</span>: <span class="hljs-string">"A..."</span>,
    <span class="hljs-attr">"secretAccessKey"</span>: <span class="hljs-string">"yX..."</span>,
-   <span class="hljs-attr">"xAmzSecurityToken"</span>: <span class="hljs-string">"IQoJ..."</span>
+   <span class="hljs-attr">"sessionToken"</span>: <span class="hljs-string">"IQoJ..."</span>
   }
  }
 }
 </code></pre>
     <p>
-      Use <code>data.session.xAmzSecurityToken</code> in the
+      Use <code>data.session.sessionToken</code> in the
       <code>X-Amz-Security-Token</code> header,
       <code>data.session.accessKey</code> and
       <code>data.session.secretAccessKey</code> to sign the request.

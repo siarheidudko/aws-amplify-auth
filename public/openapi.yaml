@@ -6,7 +6,7 @@ info:
     in postman
   contact:
     email: sergey@dudko.dev
-  version: 1.0.0
+  version: 4.0.0
 servers:
   - url: http://localhost:10000
 tags:
@@ -34,6 +34,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CognitoAuthResponse"
+  /sign:
+    post:
+      tags:
+        - sign
+      summary: Sign your request with your cognito credentials
+      description: Sign your request with your cognito credentials
+      operationId: signRequest
+      requestBody:
+        description: Sign your request with your cognito credentials
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CognitoSignRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CognitoSignResponse"
 components:
   schemas:
     CognitoAuthRequest:
@@ -71,9 +92,15 @@ components:
             - access
             - id
             - all
+        withSessionData:
+          type: boolean
+          description: To get additional data in a `session` for signing the request
+          example: true
+          default: false
     CognitoAuthResponse:
       type: object
-      required: ["data"]
+      required:
+        - data
       properties:
         data:
           type: object
@@ -92,3 +119,120 @@ components:
               type: string
               description: id token (jwt) string
               example: eyJraWQiOiJsaTFwVHVhWlFucUxERytMV3JTNWJyQkJJbFNXWXl6aldiOHNseDBPa3QwPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3MTRkNDUwNy01MDVlLTQxYjYtOTE4MS03ODlmNDBlMjEyNDkiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfSEJiMlprNVlMIiwiY29nbml0bzp1c2VybmFtZSI6IjcxNGQ0NTA3LTUwNWUtNDFiNi05MTgxLTc4OWY0MGUyMTI0OSIsImdpdmVuX25hbWUiOiJTaWFyaGVpMyIsIm9yaWdpbl9qdGkiOiI4NTEwNmNjMS0zOWUzLTQxMzEtOTU3MS1mMmM4MDY0NGMwOTUiLCJhdWQiOiIyNWc3M21wY2IxZXE1YjhqZ2R2ZXI1MTFwbyIsImV2ZW50X2lkIjoiNjY2ODU3ZDMtZTc5Ny00YmRlLTgzN2EtNzEzNDgzYjEyNDZiIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2OTc1MzYxNTEsImV4cCI6MTY5NzUzOTY5MSwiaWF0IjoxNjk3NTM2MTUxLCJmYW1pbHlfbmFtZSI6IkR1ZGtvIiwianRpIjoiNzNiYmFjZTYtNmJmOC00N2M4LWI4ZGItNDllNWNkNTJiYmMzIiwiZW1haWwiOiJzZHVka29AcmVtZWR5cG9pbnRzb2x1dGlvbnMuY29tIn0.IbZ2rhJ6VLjBJ6aWIqXTqclHe4jhgctDbNn-r-chukTgBI5dg33qrQ1ve5MsmSGJqdxRLX_XoP1IKZX-W6LQ_WAjRp1NHJzxeUr-JGATao5DN3ZWE_O02dAxX_orDds6BxH0MfiIQaAXgdlS9-TEPw9B979CouYUhdJwy26QOBEMaqHFIE1na4GfbIveCLninAoZbzooNm3EHK0JiLQHkM6YRVW3AM2hJbFA_PXA_3CBRz5bO2Z6lLQeIwQeg1gpsOyB_lNWapjXq4pkY92ITGWyPL2V3KgB1DKuVAeM00i6ntNHMJHk2J1ZQClVW5itYGAHnvcFgWhDpjFt67cbCw
+            session:
+              type: object
+              description: additional data in for signing the request
+              properties:
+                accessKey:
+                  type: string
+                  description: id token (jwt) string
+                  example: "A..."
+                secretAccessKey:
+                  type: string
+                  description: id token (jwt) string
+                  example: "yX..."
+                sessionToken:
+                  type: string
+                  description: id token (jwt) string
+                  example: "IQoJ..."
+    CognitoSignRequest:
+      type: object
+      required:
+        - username
+        - password
+        - authConfig
+        - params
+        - serviceInfo
+      properties:
+        username:
+          type: string
+          description: user name in cognito
+          example: test@user.com
+        password:
+          type: string
+          format: user password in cognito
+          example: bvdyasvdyasfdyavs
+        authConfig:
+          type: object
+          description: cognito auth config
+          example:
+            scope:
+              - email
+              - openid
+            identityPoolId: us-central-1:test_pool_id
+            userPoolId: us-central-1_TESTPOOLID
+            userPoolWebClientId: test-pool-web-client-id
+            authenticationFlowType: USER_SRP_AUTH
+        params:
+          type: object
+          description: your request info
+          example:
+            method: "GET"
+            url: "https://xxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/workshops/RptKtbsn9pPSKF4opXcu"
+        serviceInfo:
+          type: object
+          description: AWS service info
+          example:
+            region: "us-east-1"
+            service: "execute-api"
+    CognitoSignResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - signedRequest
+          properties:
+            signedRequest:
+              type: object
+              description: Signed request data
+              properties:
+                method:
+                  type: string
+                  description: HTTP request method
+                  example: "GET"
+                hostname:
+                  type: string
+                  description: Host name
+                  example: "xxxxxxxx.execute-api.us-east-1.amazonaws.com"
+                query:
+                  type: object
+                  description: Query params map
+                  example: {}
+                headers:
+                  type: object
+                  description: Request headers
+                  properties:
+                    host:
+                      type: string
+                      example: "xxxxxxxx.execute-api.us-east-1.amazonaws.com"
+                    "Content-Type":
+                      type: string
+                      example: "application/json"
+                    "x-amz-date":
+                      type: string
+                      example: "20240927T130534Z"
+                    "x-amz-security-token":
+                      type: string
+                      example: "IQoJb3..."
+                    "x-amz-content-sha256":
+                      type: string
+                      example: "e3b0c4..."
+                    "authorization":
+                      type: string
+                      example: "AWS4-HMAC-SHA256 Credential=AS.../20240927/us-east-1/execute-api/aws4_request, SignedHeaders=x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=8b835..."
+                body:
+                  anyOf:
+                    - type: string
+                    - type: object
+                  example: null
+                protocol:
+                  type: string
+                  description: Request protocol
+                  example: "https:"
+                path:
+                  type: string
+                  description: Request path
+                  example: "/dev/workshops/RptKtbsn9pPSKF4opXcu"

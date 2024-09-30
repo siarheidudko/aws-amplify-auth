@@ -1,6 +1,6 @@
 {
   "name": "aws-amplify-auth",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "description": "Authenticator for Postman (aws amplify/cognito)",
   "main": "./lib/index.js",
   "scripts": {
@@ -26,6 +26,8 @@
   },
   "homepage": "https://github.com/siarheidudko/aws-amplify-auth#readme",
   "dependencies": {
+    "@aws-crypto/sha256-js": "^5.2.0",
+    "@smithy/signature-v4": "^4.1.4",
     "aws-amplify": "^6.6.2",
     "body-parser": "^1.20.3",
     "express": "^4.21.0",
